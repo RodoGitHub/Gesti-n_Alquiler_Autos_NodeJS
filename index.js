@@ -6,6 +6,10 @@ const app = express()
 const port = process.env.PORT
 app.use(cors())
 app.use(express.json())
+const userRoutes = require('./routes/user.routes')
+
+
+app.use('/register', userRoutes)
 
 
 app.get('/', (req, res) => {

@@ -1,21 +1,20 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Usuario } = require('../models');
+const { User } = require('../models');
 
-// Crear nuevo usuario
 const register = async (req, res) => {
     const { nombre, correo, password, rol } = req.body;
 
     try {
-        const userExist = await Usuario.findOne({ where: { correo } });
+        const userExist = await User.findOne({ where: { correo } });
         if (userExist) return res.status(400).json({ message: 'El usuario ya existe con ese Email' });
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await Usuario.create({
+        const newUser = await User.create({
             nombre,
             correo,
             password: hashedPassword,
-            rol: rol || 'cliente',
+            rol: rol || 'empleado',
             is_active: true
         });
 
