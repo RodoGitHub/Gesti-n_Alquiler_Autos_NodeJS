@@ -7,9 +7,11 @@ const port = process.env.PORT
 app.use(cors())
 app.use(express.json())
 const userRoutes = require('./routes/user.routes')
+const clientRoutes = require('./routes/client.routes')
 
 
 app.use('/register', userRoutes)
+app.use('/client', clientRoutes)
 
 
 app.get('/', (req, res) => {
