@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "Cfe9ec4f!",
-    "database": "alquiler_autos_db",
-    "host": "127.0.0.1",
+    "username": "nodeuser",
+    "password": "NodePass123",
+    "database": "alquiler_autos",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {
