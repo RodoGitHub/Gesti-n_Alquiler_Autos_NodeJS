@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { register, updateUser, deleteUser } = require('../controllers/auth.controller')
+const { register, updateUser, deleteUser } = require('../controllers/user.controller')
 
 //router.get('/', getAllSales)
 //router.get('/:id', getSaleById)

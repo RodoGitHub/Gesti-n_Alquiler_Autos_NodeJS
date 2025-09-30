@@ -1,71 +1,73 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { User } = require("../models");
 
-// Registrar usuario
-const register = async (req, res) => {
-    const { nombre, correo, password, rol } = req.body;
+// Login de usuario
+const login = async (req, res) => {
+  const { correo, password } = req.body;
 
-    try {
-        const userExist = await User.findOne({ where: { correo } });
-        if (userExist) return res.status(400).json({ message: 'El usuario ya existe con ese Email' });
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = await User.create({
-            nombre,
-            correo,
-            password: hashedPassword,
-            rol: rol || 'empleado',
-            is_active: true
-        });
-
-        res.status(201).json({ message: 'Usuario registrado exitosamente', data: newUser });
-    } catch (error) {
-        res.status(500).json({ status: 500, message: 'Error al crear el usuario', error: error.message });
+  try {
+    const user = await User.findOne({ where: { correo } });
+    if (!user) {
+      return res.status(401).json({ message: "Usuario no encontrado" });
     }
+
+    // Compara password
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Contraseña incorrecta" });
+    }
+
+    // token
+    const token = jwt.sign(
+      { sub: user.id, rol: user.rol },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.status(200).json({
+      message: "Login exitoso",
+      token,
+      user: {
+        id: user.id,
+        nombre: user.nombre,
+        correo: user.correo,
+        rol: user.rol,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      message: "Error en el login",
+      error: error.message,
+    });
+  }
 };
 
-// Editar usuario
-const updateUser = async (req, res) => {
-    const { id } = req.params;
-    const { nombre, correo, password, rol } = req.body;
-
-    try {
-        const user = await Usuario.findByPk(id);
-        if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
-
-        let hashedPassword = user.password;
-        if (password) {
-            hashedPassword = await bcrypt.hash(password, 10);
-        }
-
-        await user.update({
-            nombre: nombre || user.nombre,
-            correo: correo || user.correo,
-            password: hashedPassword,
-            rol: rol || user.rol
-        });
-
-        res.status(200).json({ message: 'Usuario actualizado exitosamente', data: user });
-    } catch (error) {
-        res.status(500).json({ status: 500, message: 'Error al actualizar el usuario', error: error.message });
+// Obtener usuario autenticado
+const me = async (req, res) => {
+  try {
+    const authHeader = req.headers["authorization"];
+    if (!authHeader) {
+      return res.status(401).json({ error: "No token provided" });
     }
+
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findByPk(decoded.sub, {
+      attributes: { exclude: ["password"] },
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuario no encontrado" });
+    }
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(401).json({ error: "Token inválido o expirado" });
+  }
 };
 
-// Eliminar usuario
-const deleteUser = async (req, res) => {
-    const { id } = req.params;
+module.exports = { login, me };
 
-    try {
-        const user = await Usuario.findByPk(id);
-        if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
-
-        await user.update({ is_active: false });
-
-        res.status(200).json({ message: 'Usuario eliminado (inactivado) exitosamente' });
-    } catch (error) {
-        res.status(500).json({ status: 500, message: 'Error al eliminar el usuario', error: error.message });
-    }
-};
-
-module.exports = { register, updateUser, deleteUser };
