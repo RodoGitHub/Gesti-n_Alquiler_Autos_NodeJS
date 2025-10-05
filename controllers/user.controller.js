@@ -68,4 +68,14 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = { register, updateUser, deleteUser };
+
+const getUser = async (req, res) => {
+    try {
+        const user = await User.findAll();
+        res.json({ status: 200, data: user });
+    } catch (error) {
+        res.status(500).json({ status: 500, message: 'Error al obtener usuarios', error: error.message });
+    }
+};
+
+module.exports = { register, updateUser, deleteUser, getUser };
