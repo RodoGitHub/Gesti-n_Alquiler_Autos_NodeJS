@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { login, me } = require("../controllers/auth.controller");
+const { login, me, forgotPassword, resetPassword } = require("../controllers/auth.controller");
 
 /**
  * @swagger
@@ -154,5 +154,7 @@ router.post("/login", login);
  *               $ref: '#/components/schemas/Error'
  */
 router.get("/me", me);
+router.post('/forgotPassword', forgotPassword);
+router.post('/resetPassword', resetPassword)
 
 module.exports = router;
