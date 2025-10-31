@@ -158,7 +158,7 @@ router.post('/', register)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', verifyToken,isAdmin, getUser)
+router.get('/', verifyToken, isAdmin, getUser)
 
 /**
  * @swagger
@@ -206,7 +206,7 @@ router.get('/', verifyToken,isAdmin, getUser)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateUser)
+router.put('/:id', verifyToken, isAdmin, updateUser)
 
 /**
  * @swagger
@@ -246,6 +246,6 @@ router.put('/:id', updateUser)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteUser)
+router.delete('/:id', verifyToken, isAdmin, deleteUser)
 
 module.exports = router

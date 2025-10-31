@@ -17,6 +17,7 @@ const brandRoutes = require('./routes/brand.routes');
 const carRoutes = require('./routes/car.routes');
 const rentalRoutes = require('./routes/rental.routes');
 const authRoutes = require('./routes/auth.routes');
+const rolesRoutes = require('./routes/roles.routes');
 
 
 app.use('/register', userRoutes);
@@ -25,6 +26,7 @@ app.use('/client', clientRoutes);
 app.use('/brand', brandRoutes);
 app.use('/car', carRoutes);
 app.use('/rental', rentalRoutes);
+app.use('/roles', rolesRoutes);
 
 app.get('/', (req, res) => {
   res.send('Servidor funcionando!');
