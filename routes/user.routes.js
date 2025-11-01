@@ -1,6 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const { register, updateUser, deleteUser, getUser } = require('../controllers/user.controller')
+const {
+    getRoles
+} = require('../controllers/roles.controller');
+const { 
+    register, 
+    updateUser, 
+    deleteUser, 
+    getUser 
+} = require('../controllers/user.controller')
 const verifyToken = require('../middlewares/verifyToken')
 const isAdmin = require('../middlewares/isAdmin')
 
@@ -120,7 +128,7 @@ const isAdmin = require('../middlewares/isAdmin')
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', register)
+router.post('register/', register)
 
 /**
  * @swagger
@@ -247,5 +255,6 @@ router.put('/:id', verifyToken, isAdmin, updateUser)
  *               $ref: '#/components/schemas/Error'
  */
 router.delete('/:id', verifyToken, isAdmin, deleteUser)
+router.get('/roles', getRoles);
 
 module.exports = router
