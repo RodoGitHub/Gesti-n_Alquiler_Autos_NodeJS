@@ -128,7 +128,7 @@ const isAdmin = require('../middlewares/isAdmin')
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('register/', register)
+router.post('/register', register)
 
 /**
  * @swagger
