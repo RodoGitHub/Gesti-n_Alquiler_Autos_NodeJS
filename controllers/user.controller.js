@@ -31,7 +31,7 @@ const updateUser = async (req, res) => {
     const { nombre, correo, password, rol } = req.body;
 
     try {
-        const user = await Usuario.findByPk(id);
+        const user = await User.findByPk(id);
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
         let hashedPassword = user.password;
