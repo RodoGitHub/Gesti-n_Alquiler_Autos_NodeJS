@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Cars', {
+    await queryInterface.createTable('cars', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,7 +10,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       marcaId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'brands', 
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL' 
       },
       modelo: {
         type: Sequelize.STRING
@@ -38,6 +44,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Cars');
+    await queryInterface.dropTable('cars');
   }
 };

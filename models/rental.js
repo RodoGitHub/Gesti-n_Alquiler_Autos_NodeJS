@@ -4,14 +4,11 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Rental extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Car, { foreignKey: 'carId' });
+      this.belongsTo(models.Client, { foreignKey: 'clientId' });
     }
+
   }
   Rental.init({
     carId: DataTypes.INTEGER,
@@ -24,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Rental',
+    freezeTableName: true,
+    tableName: 'rentals',
   });
   return Rental;
 };
