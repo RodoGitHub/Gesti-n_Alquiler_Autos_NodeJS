@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "rodo",
-    "password": "ranger1588",
+    "username": "root",
+    "password": "Cfe9ec4f!",
     "database": "alquiler_autos",
     "host": "127.0.0.1",
     "dialect": "mysql"
