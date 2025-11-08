@@ -94,7 +94,7 @@ const isAdmin = require('../middlewares/isAdmin')
  * @swagger
  * /register:
  *   post:
- *     summary: Registrar nuevo usuario
+ *     summary: Registrar nuevo usuario (Solo usuario registrado)
  *     tags: [Usuarios]
  *     requestBody:
  *       required: true
@@ -128,7 +128,7 @@ const isAdmin = require('../middlewares/isAdmin')
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/register', register)
+router.post('/register',verifyToken, register)
 
 /**
  * @swagger
@@ -166,14 +166,16 @@ router.post('/register', register)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', verifyToken, isAdmin, getUser)
+router.get('/register', verifyToken, isAdmin, getUser)
 
 /**
  * @swagger
  * /register/{id}:
  *   put:
- *     summary: Actualizar usuario por ID
+ *     summary: Actualizar usuario por ID (Solo administradores)
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -220,8 +222,10 @@ router.put('/:id', verifyToken, isAdmin, updateUser)
  * @swagger
  * /register/{id}:
  *   delete:
- *     summary: Eliminar usuario por ID
+ *     summary: Eliminar usuario por ID (Solo administradores)
  *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

@@ -7,6 +7,8 @@ const {
     updateBrand,
     deleteBrand
 } = require('../controllers/brand.controller');
+const verifyToken = require('../middlewares/verifyToken')
+const isAdmin = require('../middlewares/isAdmin')
 
 /**
  * @swagger
@@ -83,8 +85,10 @@ const {
  * @swagger
  * /brand:
  *   post:
- *     summary: Crear nueva marca
+ *     summary: Crear nueva marca (solo administradores)
  *     tags: [Marcas]
+ *     security:
+ *       -  bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -117,14 +121,16 @@ const {
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', addBrand);
+router.post('/',verifyToken, isAdmin, addBrand);
 
 /**
  * @swagger
  * /brand:
  *   get:
- *     summary: Obtener todas las marcas
+ *     summary: Obtener todas las marcas (usuarios registrados)
  *     tags: [Marcas]
+ *     security:
+ *       -  bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de marcas obtenida exitosamente
@@ -141,14 +147,16 @@ router.post('/', addBrand);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', getAllBrands);
+router.get('/', verifyToken,getAllBrands);
 
 /**
  * @swagger
  * /brand/{id}:
  *   get:
- *     summary: Obtener marca por ID
+ *     summary: Obtener marca por ID (usuarios registrados)
  *     tags: [Marcas]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -177,14 +185,16 @@ router.get('/', getAllBrands);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:id', getBrandById);
+router.get('/:id',verifyToken ,getBrandById);
 
 /**
  * @swagger
  * /brand/{id}:
  *   put:
- *     summary: Actualizar marca por ID
+ *     summary: Actualizar marca por ID (solo administradores)
  *     tags: [Marcas]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -225,14 +235,16 @@ router.get('/:id', getBrandById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateBrand);
+router.put('/:id', verifyToken,isAdmin,updateBrand);
 
 /**
  * @swagger
  * /brand/{id}:
  *   delete:
- *     summary: Eliminar marca por ID
+ *     summary: Eliminar marca por ID (solo administradores)
  *     tags: [Marcas]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -265,6 +277,6 @@ router.put('/:id', updateBrand);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteBrand);
+router.delete('/:id',verifyToken, isAdmin, deleteBrand);
 
 module.exports = router;

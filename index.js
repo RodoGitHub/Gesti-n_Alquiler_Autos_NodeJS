@@ -5,7 +5,7 @@ const app = express();
 const swaggerUI = require("swagger-ui-express");
 const specs = require("./swagger/swagger.js");
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;;
 
 app.use(cors());
 app.use(express.json());
@@ -18,7 +18,7 @@ const carRoutes = require('./routes/car.routes');
 const rentalRoutes = require('./routes/rental.routes');
 const authRoutes = require('./routes/auth.routes');
 
-app.use('/user', userRoutes);
+app.use('/', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/client', clientRoutes);
 app.use('/brand', brandRoutes);

@@ -1,7 +1,8 @@
 'use strict';
+const bcrypt = require('bcrypt');
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
 
     // ---- BRANDS ----
     const brands = await queryInterface.bulkInsert('brands', [
@@ -25,9 +26,12 @@ module.exports = {
     ], { returning: true });
 
     // ---- USERS ----
+    const hashedAdminPassword = await bcrypt.hash('admin', 10);
+    const hashedEmpleadoPassword = await bcrypt.hash('usuario', 10);
+
     await queryInterface.bulkInsert('users', [
-      { nombre: 'Administrador', correo: 'admin@rentacar.com', password: 'admin123', rol: 'admin', is_active: true, createdAt: new Date(), updatedAt: new Date() },
-      { nombre: 'Empleado', correo: 'empleado@rentacar.com', password: 'empleado123', rol: 'empleado', is_active: true, createdAt: new Date(), updatedAt: new Date() },
+      { nombre: 'Administrador', correo: 'admin@rentacar.com', password: hashedAdminPassword, rol: 'admin', is_active: true, createdAt: new Date(), updatedAt: new Date() },
+      { nombre: 'Usuario', correo: 'usuario@rentacar.com', password: hashedEmpleadoPassword, rol: 'empleado', is_active: true, createdAt: new Date(), updatedAt: new Date() },
     ]);
 
     // ---- RENTALS ----
@@ -38,7 +42,7 @@ module.exports = {
 
   },
 
-  async down (queryInterface, Sequelize) {
+  async down(queryInterface, Sequelize) {
     await queryInterface.bulkDelete('rentals', null, {});
     await queryInterface.bulkDelete('users', null, {});
     await queryInterface.bulkDelete('clients', null, {});
