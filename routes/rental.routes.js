@@ -7,6 +7,8 @@ const {
     updateRental,
     deleteRental
 } = require('../controllers/rental.controller');
+const verifyToken = require('../middlewares/verifyToken')
+const isAdmin = require('../middlewares/isAdmin')
 
 /**
  * @swagger
@@ -125,8 +127,10 @@ const {
  * @swagger
  * /rental:
  *   post:
- *     summary: Crear nuevo alquiler
+ *     summary: Crear nuevo alquiler (usuarios registrados)
  *     tags: [Alquileres]
+ *     security:
+ *       -  bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -165,14 +169,16 @@ const {
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', addRental);
+router.post('/', verifyToken, addRental);
 
 /**
  * @swagger
  * /rental:
  *   get:
- *     summary: Obtener todos los alquileres
+ *     summary: Obtener todos los alquileres (usuarios registrados)
  *     tags: [Alquileres]
+ *     security:
+ *       -  bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de alquileres obtenida exitosamente
@@ -189,14 +195,16 @@ router.post('/', addRental);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', getAllRentals);
+router.get('/',verifyToken ,getAllRentals);
 
 /**
  * @swagger
  * /rental/{id}:
  *   get:
- *     summary: Obtener alquiler por ID
+ *     summary: Obtener alquiler por ID (usuarios registrados)
  *     tags: [Alquileres]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -225,14 +233,16 @@ router.get('/', getAllRentals);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:id', getRentalById);
+router.get('/:id',verifyToken ,getRentalById);
 
 /**
  * @swagger
  * /rental/{id}:
  *   put:
- *     summary: Actualizar alquiler por ID
+ *     summary: Actualizar alquiler por ID (solo administradores)
  *     tags: [Alquileres]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -273,14 +283,16 @@ router.get('/:id', getRentalById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateRental);
+router.put('/:id', verifyToken, isAdmin, updateRental);
 
 /**
  * @swagger
  * /rental/{id}:
  *   delete:
- *     summary: Eliminar alquiler por ID
+ *     summary: Eliminar alquiler por ID (solo administradores)
  *     tags: [Alquileres]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -313,6 +325,6 @@ router.put('/:id', updateRental);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteRental);
+router.delete('/:id', verifyToken, isAdmin ,deleteRental);
 
 module.exports = router;

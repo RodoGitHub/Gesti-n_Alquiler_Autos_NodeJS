@@ -7,6 +7,8 @@ const {
     updateCar,
     deleteCar
 } = require('../controllers/car.controller');
+const isAdmin = require('../middlewares/isAdmin');
+const verifyToken = require('../middlewares/verifyToken')
 
 /**
  * @swagger
@@ -136,8 +138,10 @@ const {
  * @swagger
  * /car:
  *   post:
- *     summary: Crear nuevo auto
+ *     summary: Crear nuevo auto (solo administradores)
  *     tags: [Autos]
+ *     security:
+ *       -  bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -170,14 +174,16 @@ const {
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', addCar);
+router.post('/',verifyToken,isAdmin, addCar);
 
 /**
  * @swagger
  * /car:
  *   get:
- *     summary: Obtener todos los autos
+ *     summary: Obtener todos los autos (usuarios registrados)
  *     tags: [Autos]
+ *     security:
+ *       -  bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de autos obtenida exitosamente
@@ -194,14 +200,16 @@ router.post('/', addCar);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', getAllCars);
+router.get('/',verifyToken, getAllCars);
 
 /**
  * @swagger
  * /car/{id}:
  *   get:
- *     summary: Obtener auto por ID
+ *     summary: Obtener auto por ID (usuarios registrados)
  *     tags: [Autos]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -230,14 +238,16 @@ router.get('/', getAllCars);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:id', getCarById);
+router.get('/:id', verifyToken, getCarById);
 
 /**
  * @swagger
  * /car/{id}:
  *   put:
- *     summary: Actualizar auto por ID
+ *     summary: Actualizar auto por ID (solo administradores)
  *     tags: [Autos]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -278,14 +288,16 @@ router.get('/:id', getCarById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateCar);
+router.put('/:id',verifyToken, isAdmin, updateCar);
 
 /**
  * @swagger
  * /car/{id}:
  *   delete:
- *     summary: Eliminar auto por ID
+ *     summary: Eliminar auto por ID (solo administradores)
  *     tags: [Autos]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -318,6 +330,6 @@ router.put('/:id', updateCar);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteCar);
+router.delete('/:id', verifyToken, isAdmin, deleteCar);
 
 module.exports = router;

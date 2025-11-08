@@ -7,6 +7,8 @@ const {
     updateClient,
     deleteClient
 } = require('../controllers/client.controller');
+const verifyToken = require('../middlewares/verifyToken')
+const isAdmin = require('../middlewares/isAdmin')
 
 /**
  * @swagger
@@ -116,8 +118,10 @@ const {
  * @swagger
  * /client:
  *   post:
- *     summary: Crear nuevo cliente
+ *     summary: Crear nuevo cliente (usuario registrado)
  *     tags: [Clientes]
+ *     security:
+ *       -  bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -150,14 +154,16 @@ const {
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/', addClient);
+router.post('/',verifyToken,addClient);
 
 /**
  * @swagger
  * /client:
  *   get:
- *     summary: Obtener todos los clientes
+ *     summary: Obtener todos los clientes (usuario registrado)
  *     tags: [Clientes]
+ *     security:
+ *       -  bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de clientes obtenida exitosamente
@@ -174,14 +180,16 @@ router.post('/', addClient);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', getAllClients);
+router.get('/',verifyToken ,getAllClients);
 
 /**
  * @swagger
  * /client/{id}:
  *   get:
- *     summary: Obtener cliente por ID
+ *     summary: Obtener cliente por ID (usuario registrado)
  *     tags: [Clientes]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -210,14 +218,16 @@ router.get('/', getAllClients);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:id', getClientById);
+router.get('/:id',verifyToken ,getClientById);
 
 /**
  * @swagger
  * /client/{id}:
  *   put:
- *     summary: Actualizar cliente por ID
+ *     summary: Actualizar cliente por ID (administradores)
  *     tags: [Clientes]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -258,14 +268,16 @@ router.get('/:id', getClientById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', updateClient);
+router.put('/:id', verifyToken,isAdmin, updateClient);
 
 /**
  * @swagger
  * /client/{id}:
  *   delete:
- *     summary: Eliminar cliente por ID
+ *     summary: Eliminar cliente por ID (administradores)
  *     tags: [Clientes]
+ *     security:
+ *       -  bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -298,6 +310,6 @@ router.put('/:id', updateClient);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', deleteClient);
+router.delete('/:id', verifyToken, isAdmin,deleteClient);
 
 module.exports = router;
