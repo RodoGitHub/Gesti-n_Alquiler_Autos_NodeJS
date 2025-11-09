@@ -22,7 +22,7 @@ const options = {
                 description: 'Servidor de desarrollo local'
             },
             {
-                url: 'https://api-alquiler-autos.herokuapp.com',
+                url: 'https://gesti-nalquilerautosnodejs-production.up.railway.app',
                 description: 'Servidor de producción'
             }
         ],
