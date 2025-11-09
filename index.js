@@ -18,12 +18,12 @@ const carRoutes = require('./routes/car.routes');
 const rentalRoutes = require('./routes/rental.routes');
 const authRoutes = require('./routes/auth.routes');
 
-app.use('/', userRoutes);
 app.use('/auth', authRoutes);
 app.use('/client', clientRoutes);
 app.use('/brand', brandRoutes);
 app.use('/car', carRoutes);
 app.use('/rental', rentalRoutes);
+app.use('/user', userRoutes);
 
 app.get('/', (req, res) => {
   res.send('Servidor funcionando!');
