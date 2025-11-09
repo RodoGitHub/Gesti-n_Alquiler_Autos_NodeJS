@@ -78,4 +78,18 @@ const getUser = async (req, res) => {
     }
 };
 
-module.exports = { register, updateUser, deleteUser, getUser };
+
+const getUserById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const user = await User.findByPk(id);
+        if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+
+        res.status(200).json({ data: user });
+    } catch (error) {
+        res.status(500).json({ status: 500, message: 'Error al obtener el usuario', error: error.message });
+    }
+};
+
+module.exports = { register, updateUser, deleteUser, getUser, getUserById };

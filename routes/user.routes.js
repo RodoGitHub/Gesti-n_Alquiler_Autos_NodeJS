@@ -7,7 +7,8 @@ const {
     register, 
     updateUser, 
     deleteUser, 
-    getUser 
+    getUser,
+    getUserById
 } = require('../controllers/user.controller')
 const verifyToken = require('../middlewares/verifyToken')
 const isAdmin = require('../middlewares/isAdmin')
@@ -171,6 +172,54 @@ router.get('/register', verifyToken, isAdmin, getUser)
 /**
  * @swagger
  * /register/{id}:
+ *   get:
+ *     summary: Obtener usuario por Id (Solo administradores)
+ *     tags: [Usuarios]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del usuario
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Usuario obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/UserResponse'
+ *       401:
+ *         description: No autorizado - Token requerido
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       403:
+ *         description: Acceso denegado - Se requiere rol de administrador
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
+router.get('/register/:id', verifyToken, isAdmin, getUserById)
+
+
+
+/**
+ * @swagger
+ * /register/{id}:
  *   put:
  *     summary: Actualizar usuario por ID (Solo administradores)
  *     tags: [Usuarios]
@@ -216,7 +265,7 @@ router.get('/register', verifyToken, isAdmin, getUser)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', verifyToken, isAdmin, updateUser)
+router.put('/register/:id', verifyToken, isAdmin, updateUser)
 
 /**
  * @swagger
@@ -258,7 +307,7 @@ router.put('/:id', verifyToken, isAdmin, updateUser)
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', verifyToken, isAdmin, deleteUser)
+router.delete('/register/:id', verifyToken, isAdmin, deleteUser)
 router.get('/roles', getRoles);
 
 module.exports = router
