@@ -243,4 +243,3 @@ router.delete('/:id', verifyToken, isAdmin, deleteUser);
 
 module.exports = router;
 
-user route
