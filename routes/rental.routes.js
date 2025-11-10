@@ -127,7 +127,7 @@ const isAdmin = require('../middlewares/isAdmin')
  * @swagger
  * /rental:
  *   post:
- *     summary: Crear nuevo alquiler (usuarios registrados)
+ *     summary: Crear nuevo alquiler (Empleados-Administradores)
  *     tags: [Alquileres]
  *     security:
  *       -  bearerAuth: []
@@ -175,7 +175,7 @@ router.post('/', verifyToken, addRental);
  * @swagger
  * /rental:
  *   get:
- *     summary: Obtener todos los alquileres (usuarios registrados)
+ *     summary: Obtener todos los alquileres (Empleados-Administradores)
  *     tags: [Alquileres]
  *     security:
  *       -  bearerAuth: []
@@ -201,7 +201,7 @@ router.get('/',verifyToken ,getAllRentals);
  * @swagger
  * /rental/{id}:
  *   get:
- *     summary: Obtener alquiler por ID (usuarios registrados)
+ *     summary: Obtener alquiler por ID (Empleados-Administradores)
  *     tags: [Alquileres]
  *     security:
  *       -  bearerAuth: []
@@ -239,7 +239,7 @@ router.get('/:id',verifyToken ,getRentalById);
  * @swagger
  * /rental/{id}:
  *   put:
- *     summary: Actualizar alquiler por ID (solo administradores)
+ *     summary: Actualizar alquiler por ID (Empleados-Administradores)
  *     tags: [Alquileres]
  *     security:
  *       -  bearerAuth: []
@@ -283,13 +283,13 @@ router.get('/:id',verifyToken ,getRentalById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', verifyToken, isAdmin, updateRental);
+router.put('/:id', verifyToken, updateRental);
 
 /**
  * @swagger
  * /rental/{id}:
  *   delete:
- *     summary: Eliminar alquiler por ID (solo administradores)
+ *     summary: Eliminar alquiler por ID (Empleados-Administradores)
  *     tags: [Alquileres]
  *     security:
  *       -  bearerAuth: []
@@ -325,6 +325,6 @@ router.put('/:id', verifyToken, isAdmin, updateRental);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', verifyToken, isAdmin ,deleteRental);
+router.delete('/:id', verifyToken, deleteRental);
 
 module.exports = router;
