@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     anio: DataTypes.INTEGER,
     precio_dia: DataTypes.DECIMAL,
     disponible: DataTypes.BOOLEAN,
+    patente: DataTypes.STRING,
     is_active: DataTypes.BOOLEAN
   }, {
     sequelize,

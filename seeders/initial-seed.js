@@ -13,10 +13,10 @@ module.exports = {
 
     // ---- CARS ----
     const cars = await queryInterface.bulkInsert('cars', [
-      { marcaId: 1, modelo: 'Hilux', anio: 2022, precio_dia: 35000, disponible: true, is_active: true, createdAt: new Date(), updatedAt: new Date() },
-      { marcaId: 1, modelo: 'Corolla', anio: 2021, precio_dia: 25000, disponible: true, is_active: true, createdAt: new Date(), updatedAt: new Date() },
-      { marcaId: 2, modelo: 'Ranger', anio: 2023, precio_dia: 42000, disponible: true, is_active: true, createdAt: new Date(), updatedAt: new Date() },
-      { marcaId: 3, modelo: 'Onix', anio: 2020, precio_dia: 18000, disponible: true, is_active: true, createdAt: new Date(), updatedAt: new Date() }
+      { marcaId: 1, modelo: 'Hilux', anio: 2022, precio_dia: 35000, disponible: true, patente: 'AC200CB' ,is_active: true, createdAt: new Date(), updatedAt: new Date() },
+      { marcaId: 1, modelo: 'Corolla', anio: 2021, precio_dia: 25000, disponible: true, patente: 'AD333CF', is_active: true, createdAt: new Date(), updatedAt: new Date() },
+      { marcaId: 2, modelo: 'Ranger', anio: 2023, precio_dia: 42000, disponible: true, patente: 'GKA333',  is_active: true, createdAt: new Date(), updatedAt: new Date() },
+      { marcaId: 3, modelo: 'Onix', anio: 2020, precio_dia: 18000, disponible: true, patente: 'AF123ID',  is_active: true, createdAt: new Date(), updatedAt: new Date() }
     ], { returning: true });
 
     // ---- CLIENTS ----

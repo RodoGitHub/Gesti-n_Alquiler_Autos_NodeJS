@@ -1,12 +1,12 @@
 const { Car, Brand } = require('../models');
 
 const addCar = async (req, res) => {
-    const { marcaId, modelo, anio, precio_dia, disponible } = req.body;
+    const { marcaId, modelo, anio, precio_dia, disponible, patente } = req.body;
     try {
         const brand = await Brand.findByPk(marcaId);
         if (!brand) return res.status(404).json({ message: 'Marca no encontrada' });
 
-        const newCar = await Car.create({ marcaId, modelo, anio, precio_dia, disponible, is_active: true });
+        const newCar = await Car.create({ marcaId, modelo, anio, precio_dia, disponible, patente, is_active: true });
         res.status(201).json({ message: 'Auto registrado exitosamente', data: newCar });
     } catch (error) {
         res.status(500).json({ status: 500, message: 'Error al crear el auto', error: error.message });
@@ -36,12 +36,12 @@ const getCarById = async (req, res) => {
 
 const updateCar = async (req, res) => {
     const { id } = req.params;
-    const { marcaId, modelo, anio, precio_dia, disponible, is_active } = req.body;
+    const { marcaId, modelo, anio, precio_dia, disponible, patente, is_active } = req.body;
     try {
         const car = await Car.findByPk(id);
         if (!car) return res.status(404).json({ message: 'Auto no encontrado' });
 
-        await car.update({ marcaId, modelo, anio, precio_dia, disponible, is_active });
+        await car.update({ marcaId, modelo, anio, precio_dia, disponible, patente, is_active });
         res.status(200).json({ message: 'Auto actualizado correctamente', data: car });
     } catch (error) {
         res.status(500).json({ status: 500, message: 'Error al actualizar el auto', error: error.message });
