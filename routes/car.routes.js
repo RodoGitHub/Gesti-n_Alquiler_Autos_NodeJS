@@ -21,6 +21,7 @@ const verifyToken = require('../middlewares/verifyToken')
  *         - año
  *         - precio_diario
  *         - disponible
+ *         - patente
  *         - brandId
  *       properties:
  *         id:
@@ -48,6 +49,10 @@ const verifyToken = require('../middlewares/verifyToken')
  *           type: boolean
  *           description: Si el auto está disponible para alquiler
  *           example: true
+ *         patente:
+ *           type: string
+ *           description: Patente del auto
+ *           example: "AC102BD"
  *         brandId:
  *           type: integer
  *           description: ID de la marca del auto
@@ -97,6 +102,10 @@ const verifyToken = require('../middlewares/verifyToken')
  *           type: boolean
  *           description: Si el auto está disponible para alquiler
  *           example: true
+ *         patente:
+ *           type: string
+ *           description: Patente del auto
+ *           example: "AC102BD"
  *         brandId:
  *           type: integer
  *           description: ID de la marca del auto
@@ -128,6 +137,10 @@ const verifyToken = require('../middlewares/verifyToken')
  *           type: boolean
  *           description: Si el auto está disponible para alquiler
  *           example: false
+ *         patente:
+ *           type: string
+ *           description: Patente del auto
+ *           example: "AC102BD"
  *         brandId:
  *           type: integer
  *           description: ID de la marca del auto

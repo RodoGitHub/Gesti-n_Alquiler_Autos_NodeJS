@@ -30,6 +30,9 @@ module.exports = {
       disponible: {
         type: Sequelize.BOOLEAN
       },
+      patente: {
+        type: Sequelize.STRING
+      },
       is_active: {
         type: Sequelize.BOOLEAN
       },
