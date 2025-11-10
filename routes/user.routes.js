@@ -112,7 +112,7 @@ const isAdmin = require('../middlewares/isAdmin');
  *       500:
  *         description: Error interno
  */
-router.post('/register', verifyToken, register);
+router.post('/register', verifyToken, isAdmin, register);
 
 /**
  * @swagger
@@ -132,7 +132,7 @@ router.post('/register', verifyToken, register);
  *       500:
  *         description: Error interno
  */
-router.get('/', verifyToken, getUser);
+router.get('/', verifyToken, isAdmin, getUser);
 
 /**
  * @swagger
@@ -147,7 +147,7 @@ router.get('/', verifyToken, getUser);
  *         description: Error interno
  */
 
-router.get('/roles', getRoles);
+router.get('/roles', verifyToken, isAdmin, getRoles);
 
 /**
  * @swagger

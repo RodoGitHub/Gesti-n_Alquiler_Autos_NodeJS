@@ -85,7 +85,7 @@ const isAdmin = require('../middlewares/isAdmin')
  * @swagger
  * /brand:
  *   post:
- *     summary: Crear nueva marca (solo administradores)
+ *     summary: Crear nueva marca (Empleados-Administradores)
  *     tags: [Marcas]
  *     security:
  *       -  bearerAuth: []
@@ -121,13 +121,13 @@ const isAdmin = require('../middlewares/isAdmin')
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/',verifyToken, isAdmin, addBrand);
+router.post('/',verifyToken, addBrand);
 
 /**
  * @swagger
  * /brand:
  *   get:
- *     summary: Obtener todas las marcas (usuarios registrados)
+ *     summary: Obtener todas las marcas
  *     tags: [Marcas]
  *     security:
  *       -  bearerAuth: []
@@ -147,13 +147,13 @@ router.post('/',verifyToken, isAdmin, addBrand);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/', verifyToken,getAllBrands);
+router.get('/', getAllBrands);
 
 /**
  * @swagger
  * /brand/{id}:
  *   get:
- *     summary: Obtener marca por ID (usuarios registrados)
+ *     summary: Obtener marca por ID 
  *     tags: [Marcas]
  *     security:
  *       -  bearerAuth: []
@@ -185,13 +185,13 @@ router.get('/', verifyToken,getAllBrands);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:id',verifyToken ,getBrandById);
+router.get('/:id', getBrandById);
 
 /**
  * @swagger
  * /brand/{id}:
  *   put:
- *     summary: Actualizar marca por ID (solo administradores)
+ *     summary: Actualizar marca por ID (Empleados-Administradores)
  *     tags: [Marcas]
  *     security:
  *       -  bearerAuth: []
@@ -235,13 +235,13 @@ router.get('/:id',verifyToken ,getBrandById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', verifyToken,isAdmin,updateBrand);
+router.put('/:id', verifyToken, updateBrand);
 
 /**
  * @swagger
  * /brand/{id}:
  *   delete:
- *     summary: Eliminar marca por ID (solo administradores)
+ *     summary: Eliminar marca por ID (Empleados-Administradores)
  *     tags: [Marcas]
  *     security:
  *       -  bearerAuth: []
@@ -277,6 +277,6 @@ router.put('/:id', verifyToken,isAdmin,updateBrand);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id',verifyToken, isAdmin, deleteBrand);
+router.delete('/:id',verifyToken, deleteBrand);
 
 module.exports = router;

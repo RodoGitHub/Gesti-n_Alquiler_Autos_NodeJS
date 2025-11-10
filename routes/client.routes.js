@@ -118,7 +118,7 @@ const isAdmin = require('../middlewares/isAdmin')
  * @swagger
  * /client:
  *   post:
- *     summary: Crear nuevo cliente (usuario registrado)
+ *     summary: Crear nuevo cliente (Empleados-Administradores)
  *     tags: [Clientes]
  *     security:
  *       -  bearerAuth: []
@@ -160,7 +160,7 @@ router.post('/',verifyToken,addClient);
  * @swagger
  * /client:
  *   get:
- *     summary: Obtener todos los clientes (usuario registrado)
+ *     summary: Obtener todos los clientes (Empleados-Administradores)
  *     tags: [Clientes]
  *     security:
  *       -  bearerAuth: []
@@ -186,7 +186,7 @@ router.get('/',verifyToken ,getAllClients);
  * @swagger
  * /client/{id}:
  *   get:
- *     summary: Obtener cliente por ID (usuario registrado)
+ *     summary: Obtener cliente por ID (Empleados-Administradores)
  *     tags: [Clientes]
  *     security:
  *       -  bearerAuth: []
@@ -224,7 +224,7 @@ router.get('/:id',verifyToken ,getClientById);
  * @swagger
  * /client/{id}:
  *   put:
- *     summary: Actualizar cliente por ID (administradores)
+ *     summary: Actualizar cliente por ID (Empleados-Administradores)
  *     tags: [Clientes]
  *     security:
  *       -  bearerAuth: []
@@ -268,13 +268,13 @@ router.get('/:id',verifyToken ,getClientById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id', verifyToken,isAdmin, updateClient);
+router.put('/:id', verifyToken, updateClient);
 
 /**
  * @swagger
  * /client/{id}:
  *   delete:
- *     summary: Eliminar cliente por ID (administradores)
+ *     summary: Eliminar cliente por ID (Empleados-Administradores)
  *     tags: [Clientes]
  *     security:
  *       -  bearerAuth: []
@@ -310,6 +310,6 @@ router.put('/:id', verifyToken,isAdmin, updateClient);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', verifyToken, isAdmin,deleteClient);
+router.delete('/:id', verifyToken, deleteClient);
 
 module.exports = router;

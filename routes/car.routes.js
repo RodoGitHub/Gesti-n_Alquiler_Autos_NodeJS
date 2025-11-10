@@ -138,7 +138,7 @@ const verifyToken = require('../middlewares/verifyToken')
  * @swagger
  * /car:
  *   post:
- *     summary: Crear nuevo auto (solo administradores)
+ *     summary: Crear nuevo auto (Empleados-Administradores)
  *     tags: [Autos]
  *     security:
  *       -  bearerAuth: []
@@ -174,13 +174,13 @@ const verifyToken = require('../middlewares/verifyToken')
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.post('/',verifyToken,isAdmin, addCar);
+router.post('/',verifyToken, addCar);
 
 /**
  * @swagger
  * /car:
  *   get:
- *     summary: Obtener todos los autos (usuarios registrados)
+ *     summary: Obtener todos los autos
  *     tags: [Autos]
  *     security:
  *       -  bearerAuth: []
@@ -200,13 +200,13 @@ router.post('/',verifyToken,isAdmin, addCar);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/',verifyToken, getAllCars);
+router.get('/', getAllCars);
 
 /**
  * @swagger
  * /car/{id}:
  *   get:
- *     summary: Obtener auto por ID (usuarios registrados)
+ *     summary: Obtener auto por ID 
  *     tags: [Autos]
  *     security:
  *       -  bearerAuth: []
@@ -238,13 +238,13 @@ router.get('/',verifyToken, getAllCars);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.get('/:id', verifyToken, getCarById);
+router.get('/:id', getCarById);
 
 /**
  * @swagger
  * /car/{id}:
  *   put:
- *     summary: Actualizar auto por ID (solo administradores)
+ *     summary: Actualizar auto por ID (Empleados-Administradores)
  *     tags: [Autos]
  *     security:
  *       -  bearerAuth: []
@@ -288,13 +288,13 @@ router.get('/:id', verifyToken, getCarById);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.put('/:id',verifyToken, isAdmin, updateCar);
+router.put('/:id',verifyToken, updateCar);
 
 /**
  * @swagger
  * /car/{id}:
  *   delete:
- *     summary: Eliminar auto por ID (solo administradores)
+ *     summary: Eliminar auto por ID (Empleados-Administradores)
  *     tags: [Autos]
  *     security:
  *       -  bearerAuth: []
@@ -330,6 +330,6 @@ router.put('/:id',verifyToken, isAdmin, updateCar);
  *             schema:
  *               $ref: '#/components/schemas/Error'
  */
-router.delete('/:id', verifyToken, isAdmin, deleteCar);
+router.delete('/:id', verifyToken, deleteCar);
 
 module.exports = router;
