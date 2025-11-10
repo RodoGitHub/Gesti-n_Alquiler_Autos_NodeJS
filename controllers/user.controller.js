@@ -52,7 +52,6 @@ const updateUser = async (req, res) => {
     }
 };
 
-// Eliminar usuario
 const deleteUser = async (req, res) => {
     const { id } = req.params;
 
@@ -60,9 +59,9 @@ const deleteUser = async (req, res) => {
         const user = await User.findByPk(id);
         if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
-        await user.update({ is_active: false });
+        await user.destroy(); 
 
-        res.status(200).json({ message: 'Usuario eliminado (inactivado) exitosamente' });
+        res.status(200).json({ message: 'Usuario eliminado permanentemente exitosamente' });
     } catch (error) {
         res.status(500).json({ status: 500, message: 'Error al eliminar el usuario', error: error.message });
     }
